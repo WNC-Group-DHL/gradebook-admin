@@ -1,9 +1,10 @@
-import { Button, Container, Grid } from '@mui/material';
+import { Button, Container } from '@mui/material';
 import ErrorPage from '../../_common/error';
 import Loader from '../../_common/loader';
-import ClassroomListItem from './classroomListItem';
+// import ClassroomListItem from './classroomListItem';
+import ClassListTable from './classTable';
 
-function ClassroomList({error, isLoaded, classrooms, handleRefresh}) {
+function ClassroomListContainer({error, isLoaded, classrooms, handleRefresh}) {
   if (error) {
     return <ErrorPage 
       code = {error.status}
@@ -22,8 +23,8 @@ function ClassroomList({error, isLoaded, classrooms, handleRefresh}) {
     />
   } else {
     return (
-      <Container maxWidth='xl' sx={{marginTop: 2}}>
-        <Grid container spacing={3}>
+      <Container maxWidth='xl'>
+        {/* <Grid container spacing={3}>
           {classrooms.map(classroom => (
             <Grid
               key={classroom.id}
@@ -33,10 +34,13 @@ function ClassroomList({error, isLoaded, classrooms, handleRefresh}) {
               <ClassroomListItem classroom={classroom}/>
             </Grid>
           ))}
-        </Grid>
+        </Grid> */}
+        <ClassListTable
+          datas={classrooms}
+        />
       </Container>
     );
   }
 }
 
-export default ClassroomList;
+export default ClassroomListContainer;

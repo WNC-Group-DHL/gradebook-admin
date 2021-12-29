@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import ClassroomAPI from '../../../helpers/api/classrooms';
 
 import DefaultLayout from '../../_layout/default';
-import ClassroomList from './classroomList';
+import ClassroomListContainer from './classroomList';
 import ClassroomListToolbar from './classroomListToolbar';
 import NewClassroomDialog from './dialogs/addNew';
 
@@ -68,7 +68,7 @@ function ClassroomListPage() {
         handleRefresh = {loadClassrooms}
         handleOpenNewDialog = {() => {setIsNewFormOpen(true)}}
       />
-      <ClassroomList 
+      <ClassroomListContainer 
         error = {error}
         isLoaded = {isLoaded}
         classrooms = {classrooms}

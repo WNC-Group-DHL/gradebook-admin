@@ -17,17 +17,18 @@ import UserListToolbar from '../../../_common/userTable/userListToolbar';
 import UserTableRow from './tableRow';
 import { removeSigns } from '../../../../helpers/helper/stringHelper';
 
-export default function UserListTable({
-  userData = []
+export default function ClassListTable({
+  datas = []
 }) {
+  console.log(datas);
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
   const [selected, setSelected] = useState([]);
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  const isEmptyData = userData.length === 0;
+  
+  const isEmptyData = datas.length === 0;
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -37,7 +38,7 @@ export default function UserListTable({
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = userData.map((n) => n.name);
+      const newSelecteds = datas.map((n) => n.class_name);
       setSelected(newSelecteds);
       return;
     }
@@ -45,6 +46,7 @@ export default function UserListTable({
   };
 
   const handleClick = (event, name) => {
+    console.log(name)
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
     if (selectedIndex === -1) {
@@ -75,90 +77,90 @@ export default function UserListTable({
     setFilterName(event.target.value);
   };
 
-  const handleDelete = (userId) => () => {
+  const handleDelete = (id) => () => {
     //Delete
   }
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - userData.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - datas.length) : 0;
 
-  const filteredUsers = applySortFilter(userData, getComparator(order, orderBy), filterName);
+  const filteredUsers = applySortFilter(datas, getComparator(order, orderBy), filterName);
 
-  const isUserNotFound = filteredUsers.length === 0;
+  const isNotFound = filteredUsers.length === 0;
 
   return (
-        <Card>
-          <UserListToolbar
+    <Card>
+      <UserListToolbar
+        numSelected={selected.length}
+        filterName={filterName}
+        onFilterName={handleFilterByName}
+      />
+
+      <TableContainer>
+        <Table>
+          <UserListHead
+            order={order}
+            orderBy={orderBy}
+            headLabel={TABLE_HEAD}
+            rowCount={datas.length}
             numSelected={selected.length}
-            filterName={filterName}
-            onFilterName={handleFilterByName}
+            onRequestSort={handleRequestSort}
+            onSelectAllClick={handleSelectAllClick}
           />
-          <TableContainer>
-            <Table stickyHeader>
-              <UserListHead
-                order={order}
-                orderBy={orderBy}
-                headLabel={TABLE_HEAD}
-                rowCount={userData.length}
-                numSelected={selected.length}
-                onRequestSort={handleRequestSort}
-                onSelectAllClick={handleSelectAllClick}
-              />
-              <TableBody>
-                {filteredUsers
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
-                    const { id, name } = row;
-                    const isItemSelected = selected.indexOf(name) !== -1;
+          <TableBody>
+            {filteredUsers
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row) => {
+                const { id, class_name } = row;
+                const isItemSelected = selected.indexOf(class_name) !== -1;
 
-                    return (
-                      <UserTableRow
-                        key={row.id}
-                        row={row}
-                        selected={isItemSelected}
-                        handleClick={handleClick}
-                        handleDelete={handleDelete(id)}
-                      />
-                    )
-                  })}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: 53 * emptyRows }}>
-                    <TableCell colSpan={6} />
-                  </TableRow>
-                )}
-              </TableBody>
-              {isUserNotFound && (
-                <TableBody>
-                  <TableRow>
-                    <TableCell align='center' colSpan={6} sx={{ py: 3 }}>
-                      <SearchNotFound isEmpty={isEmptyData} searchQuery={filterName} />
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              )}
-            </Table>
-          </TableContainer>
+                return (
+                  <UserTableRow
+                    key={row.id}
+                    row={row}
+                    selected={isItemSelected}
+                    handleClick={handleClick}
+                    handleDelete={handleDelete(id)}
+                  />
+                )
+              })}
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+          </TableBody>
+          {isNotFound && (
+            <TableBody>
+              <TableRow>
+                <TableCell align='center' colSpan={6} sx={{ py: 3 }}>
+                  <SearchNotFound isEmpty={isEmptyData} searchQuery={filterName} />
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          )}
+        </Table>
+      </TableContainer>
 
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component='div'
-            count={userData.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Card>
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25]}
+        component='div'
+        count={datas.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </Card>
   );
 }
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Họ tên', alignRight: false },
-  { id: 'username', label: 'Email/Username', alignRight: false },
-  { id: 'usercode', label: 'MSSV(nếu có)', alignRight: false },
+  { id: 'className', label: 'Lớp', alignRight: false },
+  { id: 'subject', label: 'Môn', alignRight: false },
   { id: 'status', label: 'Trạng thái', alignRight: false },
-  { id: 'lastActive', label: 'Truy cập lần cuối', alignRight: false },
+  { id: 'owner', label: 'Thông tin tạo', alignRight: false },
   { id: '' }
 ];
 
@@ -190,7 +192,7 @@ function applySortFilter(array, comparator, query) {
   if (query) {
     return filter(
       array, 
-      (_data) => removeSigns(_data.name).toLowerCase().indexOf(
+      (_data) => removeSigns(_data.class_name).toLowerCase().indexOf(
         removeSigns(query).toLowerCase()) !== -1
     );
   }

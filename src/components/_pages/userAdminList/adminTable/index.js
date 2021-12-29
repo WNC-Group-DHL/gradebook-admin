@@ -15,9 +15,10 @@ import SearchNotFound from '../../../_common/userTable/searchNotFound';
 import UserListHead from '../../../_common/userTable/userListHead';
 import UserListToolbar from '../../../_common/userTable/userListToolbar';
 import UserTableRow from './tableRow';
+import { removeSigns } from '../../../../helpers/helper/stringHelper';
 
 export default function AdminListTable({
-  userData
+  userData = []
 }) {
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
@@ -25,6 +26,8 @@ export default function AdminListTable({
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const isEmptyData = userData.length === 0;
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -90,53 +93,54 @@ export default function AdminListTable({
             onFilterName={handleFilterByName}
           />
 
-          {/* <Scrollbar> */}
-            <TableContainer sx={{ minWidth: 800 }}>
-              <Table>
-                <UserListHead
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={TABLE_HEAD}
-                  rowCount={userData.length}
-                  numSelected={selected.length}
-                  onRequestSort={handleRequestSort}
-                  onSelectAllClick={handleSelectAllClick}
-                />
-                <TableBody>
-                  {filteredUsers
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
-                      const { id, name } = row;
-                      const isItemSelected = selected.indexOf(name) !== -1;
+          <TableContainer>
+            <Table stickyHeader>
+              <UserListHead
+                order={order}
+                orderBy={orderBy}
+                headLabel={TABLE_HEAD}
+                rowCount={userData.length}
+                numSelected={selected.length}
+                onRequestSort={handleRequestSort}
+                onSelectAllClick={handleSelectAllClick}
+              />
+              <TableBody>
+                {filteredUsers
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => {
+                    const { id, name } = row;
+                    const isItemSelected = selected.indexOf(name) !== -1;
 
-                      return (
-                        <UserTableRow
-                          key={row.id}
-                          row={row}
-                          selected={isItemSelected}
-                          handleClick={handleClick}
-                          handleDelete={handleDelete(id)}
-                        />
-                      )
-                    })}
-                  {emptyRows > 0 && (
-                    <TableRow style={{ height: 53 * emptyRows }}>
-                      <TableCell colSpan={6} />
-                    </TableRow>
-                  )}
-                </TableBody>
-                {isUserNotFound && (
-                  <TableBody>
-                    <TableRow>
-                      <TableCell align='center' colSpan={6} sx={{ py: 3 }}>
-                        <SearchNotFound searchQuery={filterName} />
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
+                    return (
+                      <UserTableRow
+                        key={row.id}
+                        row={row}
+                        selected={isItemSelected}
+                        handleClick={handleClick}
+                        handleDelete={handleDelete(id)}
+                      />
+                    )
+                  })}
+                {emptyRows > 0 && (
+                  <TableRow style={{ height: 53 * emptyRows }}>
+                    <TableCell colSpan={6} />
+                  </TableRow>
                 )}
-              </Table>
-            </TableContainer>
-          {/* </Scrollbar> */}
+              </TableBody>
+              {isUserNotFound && (
+                <TableBody>
+                  <TableRow>
+                    <TableCell align='center' colSpan={6} sx={{ py: 3 }}>
+                      <SearchNotFound 
+                        isEmpty={isEmptyData} 
+                        searchQuery={filterName} 
+                      />
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              )}
+            </Table>
+          </TableContainer>
 
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
@@ -187,7 +191,11 @@ function applySortFilter(array, comparator, query) {
     return a[1] - b[1];
   });
   if (query) {
-    return filter(array, (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+    return filter(
+      array, 
+      (_data) => removeSigns(_data.name).toLowerCase().indexOf(
+        removeSigns(query).toLowerCase()) !== -1
+    );
   }
   return stabilizedThis.map((el) => el[0]);
 }

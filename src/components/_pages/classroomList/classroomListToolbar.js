@@ -1,9 +1,7 @@
-import {Toolbar, Container, Button, IconButton, Typography, Divider, Stack} from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
+import {Toolbar, Container, IconButton, Typography, Divider, Stack} from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
 function ClassroomListToolbar({
-  handleOpenNewDialog,
   handleRefresh
 }) {
   return (
@@ -27,13 +25,6 @@ function ClassroomListToolbar({
             >
               <RefreshIcon/>
             </IconButton>
-            <Button
-              variant='outlined'
-              startIcon={<AddIcon/>}
-              onClick={handleOpenNewDialog}
-            >
-              Tạo
-            </Button>
           </Stack>
         </Toolbar>
       </Container>
