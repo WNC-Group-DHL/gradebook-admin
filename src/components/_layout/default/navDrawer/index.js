@@ -5,6 +5,7 @@ import {
 import {
   Box,
   Drawer,
+  Paper,
 } from '@mui/material';
 
 import DrawerContent from './drawerContent';
@@ -21,11 +22,13 @@ export default function NavigationDrawer({open, toggleDrawer}) {
       open={open}
       onClose={toggleDrawer}
     >
-      <Box width={DRAWER_WIDTH}>
-        <DrawerContent
-          toggleDrawer={toggleDrawer}
-        />
-      </Box>
+      <Paper>
+        <Box width={DRAWER_WIDTH}>
+          <DrawerContent
+            toggleDrawer={toggleDrawer}
+          />
+        </Box>
+      </Paper>
     </Drawer>
   )
 }

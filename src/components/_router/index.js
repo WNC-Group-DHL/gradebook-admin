@@ -17,11 +17,21 @@ function Router() {
         <SignInPage/>
       </NonAuthOnlyRoute>
       <AuthOnlyRoute exact path='/dashboard'>
+        <Redirect to='/classes'/>
+      </AuthOnlyRoute>
+      <AuthOnlyRoute exact path='/classes'>
         <ClassroomList/>
       </AuthOnlyRoute>
       <AuthOnlyRoute exact path='/profile'>
         <ProfilePage/>
       </AuthOnlyRoute>
+      <AuthOnlyRoute exact path='/users'>
+        <ProfilePage/>
+      </AuthOnlyRoute>
+      <AuthOnlyRoute exact path='/users/admin'>
+        <ProfilePage/>
+      </AuthOnlyRoute>
+
       <Route exact path='/notfound'>
         <NotFoundPage/>
       </Route>

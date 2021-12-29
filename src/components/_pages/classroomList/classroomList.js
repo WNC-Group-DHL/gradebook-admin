@@ -28,9 +28,6 @@ function ClassroomList({error, isLoaded, classrooms, handleRefresh}) {
             <Grid
               key={classroom.id}
               item
-              lg={3}
-              md={4}
-              sm={6}
               xs={12}
             >
               <ClassroomListItem classroom={classroom}/>
