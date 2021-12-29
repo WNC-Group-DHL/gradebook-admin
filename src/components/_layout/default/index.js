@@ -48,17 +48,17 @@ const Main = styled('main', {
   ({ theme, open, isMdUp }) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
+    // transition: theme.transitions.create('margin', {
+    //   easing: theme.transitions.easing.sharp,
+    //   duration: theme.transitions.duration.leavingScreen,
+    // }),
     marginLeft: 0,
     ...(open && isMdUp && {
       marginLeft: `${DRAWER_WIDTH}px`,
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
+      // transition: theme.transitions.create('margin', {
+      //   easing: theme.transitions.easing.easeOut,
+      //   duration: theme.transitions.duration.enteringScreen,
+      // }),
     }),
   }),
 );

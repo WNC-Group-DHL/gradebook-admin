@@ -7,6 +7,10 @@ import NotFoundPage from '../_pages/notfound';
 import ClassroomList from '../_pages/classroomList';
 import SignInPage from '../_pages/signin';
 import ProfilePage from '../_pages/profile';
+import UserAccountList from '../_pages/userList';
+import AdminAccountList from '../_pages/userAdminList';
+import UserSingle from '../_pages/userSingle';
+import ClassSingle from '../_pages/classSingle';
 
 // Pages
 
@@ -19,17 +23,25 @@ function Router() {
       <AuthOnlyRoute exact path='/dashboard'>
         <Redirect to='/classes'/>
       </AuthOnlyRoute>
+
       <AuthOnlyRoute exact path='/classes'>
         <ClassroomList/>
       </AuthOnlyRoute>
+      <AuthOnlyRoute path='/class/:classId'>
+        <ClassSingle/>
+      </AuthOnlyRoute>
+
       <AuthOnlyRoute exact path='/profile'>
         <ProfilePage/>
       </AuthOnlyRoute>
       <AuthOnlyRoute exact path='/users'>
-        <ProfilePage/>
+        <UserAccountList/>
       </AuthOnlyRoute>
       <AuthOnlyRoute exact path='/users/admin'>
-        <ProfilePage/>
+        <AdminAccountList/>
+      </AuthOnlyRoute>
+      <AuthOnlyRoute path='/user/:userId'>
+        <UserSingle/>
       </AuthOnlyRoute>
 
       <Route exact path='/notfound'>

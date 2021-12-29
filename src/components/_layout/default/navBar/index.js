@@ -31,10 +31,10 @@ const StyledAppBar = styled(AppBar, {
   ...(open && isMdUp && {
     width: `calc(100% - ${DRAWER_WIDTH}px)`,
     marginLeft: `-${DRAWER_WIDTH}px`,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
+    // transition: theme.transitions.create(['margin', 'width'], {
+    //   easing: theme.transitions.easing.easeOut,
+    //   duration: theme.transitions.duration.enteringScreen,
+    // }),
   }),
 }));
 
