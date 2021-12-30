@@ -10,6 +10,9 @@ import {
 } from '@mui/material';
 import { filter } from 'lodash';
 
+import { toast } from 'react-toastify';
+import AdminClassesAPI from '../../../../helpers/api/admin/classes';
+
 import SearchNotFound from '../../../_common/userTable/searchNotFound';
 
 import UserListHead from '../../../_common/userTable/userListHead';
@@ -18,7 +21,8 @@ import UserTableRow from './tableRow';
 import { removeSigns } from '../../../../helpers/helper/stringHelper';
 
 export default function ClassListTable({
-  datas = []
+  datas = [],
+  handleRefresh = () => {}
 }) {
   console.log(datas);
   const [page, setPage] = useState(0);
@@ -79,6 +83,18 @@ export default function ClassListTable({
 
   const handleDelete = (id) => () => {
     //Delete
+    const classInfo = datas.find((x) => x.id === id)
+    const newStatus = (classInfo.status === 'A') ? 'D' : 'A';
+    AdminClassesAPI.editClassroom(id, {
+      status: newStatus
+    })
+    .then((res) => {
+      toast.success('Cập nhật thành công');
+      handleRefresh();
+    })
+    .catch(() => {
+      toast.error('Lỗi cập nhật');
+    })
   }
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - datas.length) : 0;

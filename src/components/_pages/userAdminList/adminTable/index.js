@@ -10,6 +10,9 @@ import {
 } from '@mui/material';
 import { filter } from 'lodash';
 
+import { toast } from 'react-toastify';
+import AdminUsersAPI from '../../../../helpers/api/admin/users';
+
 import SearchNotFound from '../../../_common/userTable/searchNotFound';
 
 import UserListHead from '../../../_common/userTable/userListHead';
@@ -18,7 +21,8 @@ import UserTableRow from './tableRow';
 import { removeSigns } from '../../../../helpers/helper/stringHelper';
 
 export default function AdminListTable({
-  userData = []
+  userData = [],
+  handleRefresh = () => {}
 }) {
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
@@ -77,6 +81,18 @@ export default function AdminListTable({
 
   const handleDelete = (userId) => () => {
     //Delete
+    const userInfo = userData.find((x) => x.id === userId)
+    const newStatus = (userInfo.status === 'A') ? 'D' : 'A';
+    AdminUsersAPI.editUser(userId, {
+      status: newStatus
+    })
+    .then((res) => {
+      toast.success('Cập nhật thành công');
+      handleRefresh();
+    })
+    .catch(() => {
+      toast.error('Lỗi cập nhật');
+    })
   }
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - userData.length) : 0;

@@ -20,6 +20,7 @@ function ClassroomListContainer({error, isLoaded, classrooms, handleRefresh}) {
       <Container maxWidth='xl'>
         <ClassListTable
           datas={classrooms}
+          handleRefresh={handleRefresh}
         />
       </Container>
     );

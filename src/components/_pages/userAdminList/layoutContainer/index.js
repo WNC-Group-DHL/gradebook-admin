@@ -24,7 +24,10 @@ function UserLayoutContainer({
     return (
       <>
         <AdminListToolbar handleRefresh={handleRefresh}/>
-        <AdminListTable userData={users}/>
+        <AdminListTable 
+          userData={users}
+          handleRefresh={handleRefresh}
+        />
       </>
     );
   }
