@@ -17,7 +17,7 @@ function UserListToolbar({
             component='div'
             sx={{ flexGrow: 1}}
           >
-            Tài khoản người dùng
+            Danh sách TK người dùng
           </Typography>
           <Stack direction='row' spacing={1}>
             <IconButton

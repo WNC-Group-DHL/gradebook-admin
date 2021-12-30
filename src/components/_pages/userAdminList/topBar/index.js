@@ -18,7 +18,7 @@ function AdminListToolbar({
             component='div'
             sx={{ flexGrow: 1}}
           >
-            Tài khoản Admin
+            Danh sách TK Admin
           </Typography>
           <Stack direction='row' spacing={1}>
             <IconButton

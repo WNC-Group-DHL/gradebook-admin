@@ -17,6 +17,7 @@ function ClassroomListToolbar({
             component='div'
             sx={{ flexGrow: 1}}
           >
+            Danh sách lớp
           </Typography>
           <Stack direction='row' spacing={1}>
             <IconButton

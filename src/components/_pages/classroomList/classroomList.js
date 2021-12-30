@@ -17,12 +17,10 @@ function ClassroomListContainer({error, isLoaded, classrooms, handleRefresh}) {
     return <Loader/>;
   } else {
     return (
-      <Container maxWidth='xl'>
-        <ClassListTable
-          datas={classrooms}
-          handleRefresh={handleRefresh}
-        />
-      </Container>
+      <ClassListTable
+        datas={classrooms}
+        handleRefresh={handleRefresh}
+      />
     );
   }
 }

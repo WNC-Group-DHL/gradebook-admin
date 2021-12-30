@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify'
+import { toast } from 'react-toastify';
+
+import { Box } from '@mui/material';
 
 import AdminClassesAPI from '../../../helpers/api/admin/classes';
 
@@ -68,12 +70,14 @@ function ClassroomListPage() {
         handleRefresh = {loadClassrooms}
         handleOpenNewDialog = {() => {setIsNewFormOpen(true)}}
       />
-      <ClassroomListContainer 
-        error = {error}
-        isLoaded = {isLoaded}
-        classrooms = {classrooms}
-        handleRefresh = {() => {loadClassrooms()}}
-      />
+      <Box mt={2}>
+        <ClassroomListContainer 
+          error = {error}
+          isLoaded = {isLoaded}
+          classrooms = {classrooms}
+          handleRefresh = {() => {loadClassrooms()}}
+        />
+      </Box>
       <NewClassroomDialog
         open={isNewFormOpen}
         onClose={() => {setIsNewFormOpen(false)}}
