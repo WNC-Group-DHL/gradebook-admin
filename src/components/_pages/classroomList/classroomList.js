@@ -15,11 +15,6 @@ function ClassroomListContainer({error, isLoaded, classrooms, handleRefresh}) {
       </ErrorPage>;
   } else if (!isLoaded) {
     return <Loader/>;
-  } else if (isLoaded && classrooms.length === 0) {
-    return <ErrorPage
-      title = 'Chưa có lớp học'
-      backToHome = {false}
-    />
   } else {
     return (
       <Container maxWidth='xl'>
