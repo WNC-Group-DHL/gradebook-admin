@@ -11,18 +11,7 @@ import { getLocalDatetimeString } from '../../../../helpers/datetime';
 
 import ClassMoreMenu from '../../../_common/classTable/classMoreMenu';
 
-const statusMap = {
-  'A': {
-    color: 'success',
-    text: 'Kích hoạt',
-    isClassDisabled: false,
-  },
-  'D': {
-    color: 'error',
-    text: 'Đã vô hiệu',
-    isClassDisabled: true,
-  },
-}
+import {CLASS_STATUS} from '../../../../helpers/constants';
 
 export default function UserTableRow({
   row = {}, 
@@ -40,9 +29,9 @@ export default function UserTableRow({
     owner_avatar: ownerAvatar,
     owner_name: ownerName,
   } = row;
-  let statusInfo = statusMap[status];
+  let statusInfo = CLASS_STATUS[status];
   if (!statusInfo) {
-    statusInfo = statusMap['A'];
+    statusInfo = CLASS_STATUS['A'];
   } 
 
   return (

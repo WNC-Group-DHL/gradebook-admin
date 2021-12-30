@@ -13,12 +13,25 @@ export const USER_ACCOUNT_STATUS = Object.freeze({
   },
   'I': {
     color: 'warning',
-    text: 'Chưa Active',
+    text: 'Chưa kích hoạt',
     isClassDisabled: false,
   },
   'D': {
     color: 'error',
     text: 'Bị Lock',
+    isClassDisabled: true,
+  },
+})
+
+export const CLASS_STATUS = Object.freeze({
+  'A': {
+    color: 'success',
+    text: 'Kích hoạt',
+    isClassDisabled: false,
+  },
+  'D': {
+    color: 'error',
+    text: 'Đã vô hiệu',
     isClassDisabled: true,
   },
 })

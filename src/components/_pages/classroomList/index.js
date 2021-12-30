@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify'
 
-import ClassroomAPI from '../../../helpers/api/classrooms';
+import AdminClassesAPI from '../../../helpers/api/admin/classes';
 
 import DefaultLayout from '../../_layout/default';
 import ClassroomListContainer from './classroomList';
@@ -22,7 +22,7 @@ function ClassroomListPage() {
   const loadClassrooms = () => {
     setClassrooms([]);
     setIsLoaded(false);
-    ClassroomAPI.fetchAll()
+    AdminClassesAPI.fetchAll()
     .then(
       (result) => {
         setIsLoaded(true);

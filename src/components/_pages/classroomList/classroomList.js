@@ -1,7 +1,6 @@
 import { Button, Container } from '@mui/material';
 import ErrorPage from '../../_common/error';
 import Loader from '../../_common/loader';
-// import ClassroomListItem from './classroomListItem';
 import ClassListTable from './classTable';
 
 function ClassroomListContainer({error, isLoaded, classrooms, handleRefresh}) {
@@ -24,17 +23,6 @@ function ClassroomListContainer({error, isLoaded, classrooms, handleRefresh}) {
   } else {
     return (
       <Container maxWidth='xl'>
-        {/* <Grid container spacing={3}>
-          {classrooms.map(classroom => (
-            <Grid
-              key={classroom.id}
-              item
-              xs={12}
-            >
-              <ClassroomListItem classroom={classroom}/>
-            </Grid>
-          ))}
-        </Grid> */}
         <ClassListTable
           datas={classrooms}
         />
