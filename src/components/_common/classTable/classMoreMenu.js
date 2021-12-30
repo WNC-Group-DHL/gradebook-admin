@@ -5,12 +5,15 @@ import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@mui/mat
 
 import EditIcon from '@mui/icons-material/Edit';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+
 import DeleteIcon from '@mui/icons-material/Delete';
+import RestoreFromTrashIcon from '@mui/icons-material/RestoreFromTrash';
 
 // ----------------------------------------------------------------------
 
 export default function ClassMoreMenu({
   userId = '',
+  isDisabled = false,
   onDeleteClick = () => {},
 }) {
   const ref = useRef(null);
@@ -33,12 +36,21 @@ export default function ClassMoreMenu({
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <MenuItem sx={{ color: 'text.secondary' }} onClick={onDeleteClick}>
-          <ListItemIcon>
-            <DeleteIcon/>
-          </ListItemIcon>
-          <ListItemText primary='Xóa' primaryTypographyProps={{ variant: 'body2' }} />
-        </MenuItem>
+        {isDisabled ? 
+          <MenuItem sx={{ color: 'text.secondary' }} onClick={onDeleteClick}>
+            <ListItemIcon>
+              <RestoreFromTrashIcon/>
+            </ListItemIcon>
+            <ListItemText primary='Hủy vô hiệu' primaryTypographyProps={{ variant: 'body2' }} />
+          </MenuItem>
+          :
+          <MenuItem sx={{ color: 'text.secondary' }} onClick={onDeleteClick}>
+            <ListItemIcon>
+              <DeleteIcon/>
+            </ListItemIcon>
+            <ListItemText primary='Vô hiệu' primaryTypographyProps={{ variant: 'body2' }} />
+          </MenuItem>
+        }
 
         <MenuItem component={RouterLink} to={editLink} sx={{ color: 'text.secondary' }}>
           <ListItemIcon>

@@ -5,6 +5,24 @@ export const USER_CLASS_ROLES = Object.freeze({
   STUDENT: 'S'
 });
 
+export const USER_ACCOUNT_STATUS = Object.freeze({
+  'A': {
+    color: 'success',
+    text: 'Đã kích hoạt',
+    isClassDisabled: false,
+  },
+  'I': {
+    color: 'warning',
+    text: 'Chưa Active',
+    isClassDisabled: false,
+  },
+  'D': {
+    color: 'error',
+    text: 'Bị Lock',
+    isClassDisabled: true,
+  },
+})
+
 // Accept constraint for import grade & import student
 export const ACCEPT_IMPORT_MIMETYPES = Object.freeze([
   'application/vnd.ms-excel',

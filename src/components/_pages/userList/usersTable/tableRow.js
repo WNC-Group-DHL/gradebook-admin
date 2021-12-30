@@ -7,23 +7,9 @@ import {
   Typography,
   Chip,
 } from '@mui/material';
+import { USER_ACCOUNT_STATUS } from '../../../../helpers/constants';
 
 import UserMoreMenu from '../../../_common/userTable/userMoreMenu';
-
-const statusMap = {
-  'A': {
-    color: 'success',
-    text: 'Đã kích hoạt'
-  },
-  'I': {
-    color: 'warning',
-    text: 'Chưa Active'
-  },
-  'D': {
-    color: 'error',
-    text: 'Bị Lock'
-  },
-}
 
 export default function UserTableRow({
   row = {}, 
@@ -32,9 +18,10 @@ export default function UserTableRow({
   handleDelete = () => {}
 }) {
   const { id, name, student_code, status, username, avatarUrl, lastActive } = row;
-  let statusInfo = statusMap[status];
+  
+  let statusInfo = USER_ACCOUNT_STATUS[status];
   if (!statusInfo) {
-    statusInfo = statusMap['A'];
+    statusInfo = USER_ACCOUNT_STATUS['A'];
   } 
 
   return (
@@ -72,6 +59,7 @@ export default function UserTableRow({
       <TableCell align='right'>
         <UserMoreMenu 
           userId={id}
+          isDisabled={statusInfo.isClassDisabled}
           onDeleteClick={handleDelete}
         />
       </TableCell>

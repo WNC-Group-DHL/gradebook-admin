@@ -14,11 +14,13 @@ import ClassMoreMenu from '../../../_common/classTable/classMoreMenu';
 const statusMap = {
   'A': {
     color: 'success',
-    text: 'Kích hoạt'
+    text: 'Kích hoạt',
+    isClassDisabled: false,
   },
   'D': {
     color: 'error',
-    text: 'Đã vô hiệu'
+    text: 'Đã vô hiệu',
+    isClassDisabled: true,
   },
 }
 
@@ -94,6 +96,7 @@ export default function UserTableRow({
       <TableCell align='right'>
         <ClassMoreMenu 
           userId={classId}
+          isDisabled={statusInfo.isClassDisabled}
           onDeleteClick={handleDelete}
         />
       </TableCell>
