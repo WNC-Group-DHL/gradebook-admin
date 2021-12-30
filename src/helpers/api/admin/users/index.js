@@ -18,6 +18,11 @@ export const editUser = async (id, newUserInfo) => {
   
 }
 
+export const resetPassword = async (id, newPasswordInfo) => {
+  // const config = getAuthConfig();
+  
+}
+
 export const addAdminUser = async (id, newUserInfo) => {
   // const config = getAuthConfig();
   
@@ -27,6 +32,7 @@ const AdminUsersAPI = {
   fetchAll,
   fetchUser,
   editUser,
+  resetPassword,
   addAdminUser,
 }
 

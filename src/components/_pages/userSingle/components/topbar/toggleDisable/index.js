@@ -5,7 +5,7 @@ import AdminClassesAPI from '../../../../../../helpers/api/admin/classes';
 
 import { CLASS_STATUS } from '../../../../../../helpers/constants';
 
-export default function ToggleDisableClass({
+export default function ToggleDisable({
   classId,
   classStatus = 'A',
   onSuccess = () => {}
@@ -25,7 +25,7 @@ export default function ToggleDisableClass({
 
   const handleClick = () => {
     setIsSubmitting(true);
-    const newStatus = (classStatus === 'A') ? 'D' : 'A';
+    const newStatus = (classStatus !== 'A') ? 'A' : 'D';
     AdminClassesAPI.editClassroom(classId, {
       status: newStatus
     })

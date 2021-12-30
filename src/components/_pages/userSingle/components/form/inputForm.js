@@ -1,41 +1,41 @@
-import { Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import {
   LoadingButton
 } from '@mui/lab';
-import { Link } from 'react-router-dom';
 
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
-import AdminClassesAPI from '../../../../../helpers/api/admin/classes';
+import AdminUsersAPI from '../../../../../helpers/api/admin/users';
 
 const validationSchema = yup.object({
-  class_name: yup
+  username: yup
+    .string('Nhập username/ email đăng nhập')
+    .min(6, 'Tổi thiểu 6 kí tự')
+    .required('Bặt buộc'),
+  full_name: yup
     .string('Nhập tên lớp')
     .min(6, 'Tối thiểu 6 ký tự')
     .max(30, 'Tối đa 30 ký tự')
     .required('Bắt buộc'),
-  subject: yup
-    .string('Nhập môn học')
-    .max(30, 'Tối đa 30 ký tự')
-    .required('Bắt buộc'),
-  description: yup
-    .string('Nhập mô tả')
+  user_code: yup
+    .string('Nhập số mã sinh viên')
+    .matches(/[\w-]{6,8}/,'Mã sinh viên không hợp lệ')
 });
 
-function ClassEditForm({
-  classInfo = {}, 
+function UserEditForm({
+  userInfo = {}, 
   onSuccess = () => {}, 
   onFailed = () => {}
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const handleSubmit = async (values) => {
-    const classId = classInfo.id;
+    const userId = userInfo.id;
     const submitData = values;
     setIsSubmitting(true);
-    AdminClassesAPI.editClassroom(classId, submitData)
+    AdminUsersAPI.editUser(userId, submitData)
     .then((res) => {
       toast.success('Cập nhật thành công');
       onSuccess();
@@ -50,9 +50,9 @@ function ClassEditForm({
 
   const formik = useFormik({
     initialValues: {
-      class_name: classInfo.class_name || '',
-      subject: classInfo.subject || '',
-      description: classInfo.description ||''
+      username: userInfo.username || '',
+      full_name: userInfo.name || '',
+      user_code: userInfo.user_code || '',
     },
     validationSchema: validationSchema,
     onSubmit: handleSubmit
@@ -64,40 +64,38 @@ function ClassEditForm({
         fullWidth
         autoFocus
         margin='normal'
-        id='class_name'
-        name='class_name'
-        label='Tên lớp'
+        id='username'
+        name='username'
+        label='Tên/email đăng nhập'
         variant='outlined'
-        value={formik.values.class_name}
+        value={formik.values.username}
         onChange={formik.handleChange}
-        error={Boolean(formik.errors.class_name)}
-        helperText={formik.errors.class_name || ' '}
+        error={Boolean(formik.errors.username)}
+        helperText={formik.errors.username || ' '}
       />
       <TextField
         fullWidth
         margin='normal'
-        id='subject'
-        name='subject'
-        label='Môn học'
+        id='full_name'
+        name='full_name'
+        label='Họ tên'
         variant='outlined'
-        value={formik.values.subject}
+        value={formik.values.full_name}
         onChange={formik.handleChange}
-        error={Boolean(formik.errors.subject)}
-        helperText={formik.errors.subject || ' '}
+        error={Boolean(formik.errors.full_name)}
+        helperText={formik.errors.full_name || ' '}
       />
       <TextField
         fullWidth
         margin='normal'
-        id='description'
-        name='description'
-        label='Mô tả'
+        id='user_code'
+        name='user_code'
+        label='MSSV'
         variant='outlined'
-        multiline
-        rows={2}
-        value={formik.values.description}
+        value={formik.values.user_code}
         onChange={formik.handleChange}
-        error={Boolean(formik.errors.description)}
-        helperText={formik.errors.description || ' '}
+        error={Boolean(formik.errors.user_code)}
+        helperText={formik.errors.user_code || ' '}
       />
       <LoadingButton 
         loading={isSubmitting}
@@ -107,14 +105,8 @@ function ClassEditForm({
       >
         Lưu thay đổi
       </LoadingButton>
-      <Button 
-        sx={{marginTop: 1}} color='defaultColor' variant='outlined' fullWidth 
-        component={Link} to='/classes'
-      >
-        Hủy
-      </Button>
     </form>
   )
 }
 
-export default ClassEditForm;
+export default UserEditForm;
