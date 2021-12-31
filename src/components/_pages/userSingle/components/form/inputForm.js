@@ -38,7 +38,7 @@ function UserEditForm({
     AdminUsersAPI.editUser(userId, submitData)
     .then((res) => {
       toast.success('Cập nhật thành công');
-      onSuccess();
+      onSuccess(submitData);
     })
     .catch(() => {
       toast.error('Lỗi cập nhật');
@@ -51,7 +51,7 @@ function UserEditForm({
   const formik = useFormik({
     initialValues: {
       username: userInfo.username || '',
-      full_name: userInfo.name || '',
+      full_name: userInfo.full_name || '',
       user_code: userInfo.user_code || '',
     },
     validationSchema: validationSchema,

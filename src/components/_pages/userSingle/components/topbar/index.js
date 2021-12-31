@@ -22,7 +22,8 @@ const LinkRouter = (props) => <Link {...props} component={RouterLink} />;
 
 function UserSingleToolbar({
   userInfo = {},
-  handleRefresh = () => {}
+  handleRefresh = () => {},
+  onUpdateSuccess = () => {}
 }) {
   const isUserAdmin = userInfo.user_type === 'A';
   let prevLink = {};
@@ -56,7 +57,7 @@ function UserSingleToolbar({
                 </LinkRouter>
               </Breadcrumbs>
               <Typography variant='subtitle1' component='div'>
-                <b>/ {userInfo.name}</b>
+                <b>/ {userInfo.full_name}</b>
               </Typography>
             </AlignCenter>
           </Grid>
@@ -71,8 +72,8 @@ function UserSingleToolbar({
             >
               <ToggleDisable
                 userId={userInfo.id}
-                classStatus={userInfo.status}
-                onSuccess={handleRefresh}
+                status={userInfo.status}
+                onSuccess={onUpdateSuccess}
               />
             </Stack>
           </Grid>

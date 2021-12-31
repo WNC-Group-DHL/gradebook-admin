@@ -8,7 +8,8 @@ function LayoutContainer({
   error, 
   isLoading, 
   user = {},
-  handleRefresh = () => {}
+  handleRefresh = () => {},
+  onUpdateSuccess=() => {}
 }) {
   if (error) {
     return <ErrorPage 
@@ -24,11 +25,13 @@ function LayoutContainer({
         <UserSingleToolbar 
           userInfo={user}
           handleRefresh={handleRefresh}
+          onUpdateSuccess={onUpdateSuccess}
         />
         <Box mt={2}>
           <UserEditFormPanel 
             userInfo={user}
             handleRefresh={handleRefresh}
+            onUpdateSuccess={onUpdateSuccess}
           />
         </Box>
       </Container>

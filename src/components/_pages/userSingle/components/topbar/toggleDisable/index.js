@@ -1,43 +1,46 @@
 import { LoadingButton } from '@mui/lab';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import AdminClassesAPI from '../../../../../../helpers/api/admin/classes';
-
-import { CLASS_STATUS } from '../../../../../../helpers/constants';
+import AdminUsersAPI from '../../../../../../helpers/api/admin/users';
+import { getErrorMessage } from '../../../../../../helpers/error';
+import { USER_ACCOUNT_STATUS } from '../../../../../../helpers/constants';
 
 export default function ToggleDisable({
-  classId,
-  classStatus = 'A',
+  userId,
+  status = 'A',
   onSuccess = () => {}
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  let statusInfo = CLASS_STATUS[classStatus];
+  let statusInfo = USER_ACCOUNT_STATUS[status];
 
   if (!statusInfo) {
-    statusInfo = CLASS_STATUS['A'];
+    statusInfo = USER_ACCOUNT_STATUS['A'];
   }
 
-  const isClassDisabled = statusInfo.isClassDisabled;
+  const isDisabled = statusInfo.isClassDisabled;
   const extraButtonProps = {};
-  if (!isClassDisabled) {
+  if (!isDisabled) {
     extraButtonProps.color = 'error';
   }
 
   const handleClick = () => {
     setIsSubmitting(true);
-    const newStatus = (classStatus !== 'A') ? 'A' : 'D';
-    AdminClassesAPI.editClassroom(classId, {
-      status: newStatus
-    })
+    const updateData = {
+      status: (status === 'A') ? 'D' : 'A'
+    }
+    const toastLoadingId = toast.loading('Đang cập nhật');
+    AdminUsersAPI.editUser(userId, updateData)
     .then((res) => {
       toast.success('Cập nhật thành công');
-      onSuccess();
+      onSuccess(updateData);
     })
-    .catch(() => {
-      toast.error('Lỗi cập nhật');
+    .catch((err) => {
+      console.log(err.response)
+      toast.error(`Lỗi cập nhật - ${getErrorMessage(err)}`);
     })
     .finally(() => {
       setIsSubmitting(false);
+      toast.dismiss(toastLoadingId);
     })
   }
 
@@ -48,7 +51,7 @@ export default function ToggleDisable({
       variant='contained'
       onClick={handleClick}
     >
-      {isClassDisabled ? 'Hủy vô hiệu hóa' : 'Vô hiệu hóa'}
+      {isDisabled ? 'Hủy vô hiệu hóa' : 'Vô hiệu hóa'}
     </LoadingButton>
   )
 }

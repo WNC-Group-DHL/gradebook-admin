@@ -10,7 +10,8 @@ export const fetchAll = () => {
 
 export const fetchClassroom = (classId) => {
   const config = getAuthConfig();
-  return api.get(`${baseURL}/${classId}`, config);
+  const endpoint = '/manage';
+  return api.get(`${baseURL}${endpoint}/${classId}`, config);
 }
 
 export const editClassroom = async (id, newClassInfo) => {

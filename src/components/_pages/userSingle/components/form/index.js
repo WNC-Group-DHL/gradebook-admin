@@ -4,7 +4,8 @@ import UserResetPwdForm from './resetPwdForm';
 
 export default function UserEditFormPanel({
   userInfo = {},
-  handleRefresh = () => {}
+  handleRefresh = () => {},
+  onUpdateSuccess = () => {},
 }) {
   return (
     <Container maxWidth='xl'>
@@ -18,7 +19,7 @@ export default function UserEditFormPanel({
               <Box>
                 <UserEditForm 
                   userInfo={userInfo}
-                  onSuccess={handleRefresh}
+                  onSuccess={onUpdateSuccess}
                 />
               </Box>
             </Box>

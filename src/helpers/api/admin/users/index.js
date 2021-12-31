@@ -15,8 +15,9 @@ export const fetchAllAdmin = async () => {
 }
 
 export const fetchUserById = async (userId) => {
-  //const config = getAuthConfig();
-  //return api.get(`${baseURL}/${userId}`, config);
+  const config = getAuthConfig();
+  const endpoint = '/manage';
+  return api.get(`${baseURL}${endpoint}/${userId}`, config);
 }
 
 export const editUser = async (id, newUserInfo) => {
@@ -26,8 +27,14 @@ export const editUser = async (id, newUserInfo) => {
 }
 
 export const resetPassword = async (id, newPasswordInfo) => {
-  // const config = getAuthConfig();
-  
+  const config = getAuthConfig();
+  const endpoint = '/manage/reset';
+  const data = {
+    user_id: id,
+    ...newPasswordInfo,
+  }
+
+  return api.put(`${baseURL}${endpoint}`, data, config);
 }
 
 export const addAdminUser = async (newUserInfo) => {
