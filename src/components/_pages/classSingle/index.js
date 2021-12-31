@@ -51,6 +51,10 @@ export default function ClassSingle() {
 
   const handleRefresh = () => loadClassroom(classId);
 
+  const onUpdateSuccess = (updateInfo) => {
+    setClassroom(Object.assign({}, classroom, updateInfo));
+  }
+
   return (
     <DefaultLayout>
       <ClassroomContainer
@@ -58,6 +62,7 @@ export default function ClassSingle() {
         isLoading={isLoading}
         error={error}
         handleRefresh={handleRefresh}
+        onUpdateSuccess={onUpdateSuccess}
       />
     </DefaultLayout>
   )

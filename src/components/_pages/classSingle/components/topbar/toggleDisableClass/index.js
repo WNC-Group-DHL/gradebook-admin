@@ -25,13 +25,13 @@ export default function ToggleDisableClass({
 
   const handleClick = () => {
     setIsSubmitting(true);
-    const newStatus = (classStatus === 'A') ? 'D' : 'A';
-    AdminClassesAPI.editClassroom(classId, {
-      status: newStatus
-    })
+    const updateData = {
+      status: (classStatus === 'A') ? 'D' : 'A'
+    }
+    AdminClassesAPI.editClassroom(classId, updateData)
     .then((res) => {
       toast.success('Cập nhật thành công');
-      onSuccess();
+      onSuccess(updateData);
     })
     .catch(() => {
       toast.error('Lỗi cập nhật');

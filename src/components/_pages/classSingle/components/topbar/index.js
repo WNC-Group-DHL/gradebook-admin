@@ -22,7 +22,8 @@ const LinkRouter = (props) => <Link {...props} component={RouterLink} />;
 
 function ClassSingleToolbar({
   classInfo = {},
-  handleRefresh = () => {}
+  handleRefresh = () => {},
+  onUpdateSuccess = () => {},
 }) {
   return (
     <Container 
@@ -58,7 +59,7 @@ function ClassSingleToolbar({
               <ToggleDisableClass
                 classId={classInfo.id}
                 classStatus={classInfo.status}
-                onSuccess={handleRefresh}
+                onSuccess={onUpdateSuccess}
               />
             </Stack>
           </Grid>

@@ -38,7 +38,7 @@ function ClassEditForm({
     AdminClassesAPI.editClassroom(classId, submitData)
     .then((res) => {
       toast.success('Cập nhật thành công');
-      onSuccess();
+      onSuccess(submitData);
     })
     .catch(() => {
       toast.error('Lỗi cập nhật');

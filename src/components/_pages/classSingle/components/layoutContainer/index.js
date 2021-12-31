@@ -6,7 +6,8 @@ import ClassSingleToolbar from '../topbar';
 
 function ClassroomContainer({
   error, isLoading, classroom,
-  handleRefresh = () => {}
+  handleRefresh = () => {},
+  onUpdateSuccess = () => {},
 }) {
   if (error) {
     return <ErrorPage 
@@ -22,11 +23,13 @@ function ClassroomContainer({
         <ClassSingleToolbar 
           classInfo={classroom}
           handleRefresh={handleRefresh}
+          onUpdateSuccess={onUpdateSuccess}
         />
         <Box mt={2}>
           <ClassEditFormPanel 
             classInfo={classroom}
             handleRefresh={handleRefresh}
+            onUpdateSuccess={onUpdateSuccess}
           />
         </Box>
       </Container>

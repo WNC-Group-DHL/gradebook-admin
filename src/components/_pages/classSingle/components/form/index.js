@@ -4,7 +4,8 @@ import ClassEditForm from './inputForm';
 
 export function ClassEditFormPanel({
   classInfo = {},
-  handleRefresh = () => {}
+  handleRefresh = () => {},
+  onUpdateSuccess = () => {},
 }) {
   return (
     <Container maxWidth='xl'>
@@ -18,7 +19,7 @@ export function ClassEditFormPanel({
               <Box>
                 <ClassEditForm 
                   classInfo={classInfo}
-                  onSuccess={handleRefresh}
+                  onSuccess={onUpdateSuccess}
                 />
               </Box>
             </Box>
