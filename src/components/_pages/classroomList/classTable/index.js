@@ -18,11 +18,14 @@ import SearchNotFound from '../../../_common/userTable/searchNotFound';
 import UserListHead from '../../../_common/userTable/userListHead';
 import UserListToolbar from '../../../_common/userTable/userListToolbar';
 import UserTableRow from './tableRow';
+
+import { getErrorMessage } from '../../../../helpers/error';
 import { removeSigns } from '../../../../helpers/helper/stringHelper';
 
 export default function ClassListTable({
   datas = [],
-  handleRefresh = () => {}
+  handleRefresh = () => {},
+  onUpdateSuccess = () => {},
 }) {
   console.log(datas);
   const [page, setPage] = useState(0);
@@ -50,7 +53,6 @@ export default function ClassListTable({
   };
 
   const handleClick = (event, name) => {
-    console.log(name)
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
     if (selectedIndex === -1) {
@@ -84,16 +86,21 @@ export default function ClassListTable({
   const handleDelete = (id) => () => {
     //Delete
     const classInfo = datas.find((x) => x.id === id)
-    const newStatus = (classInfo.status === 'A') ? 'D' : 'A';
-    AdminClassesAPI.editClassroom(id, {
-      status: newStatus
-    })
+    const updateData = {
+      status: (classInfo.status === 'A') ? 'D' : 'A'
+    }
+    const toastLoadingId = toast.loading('Đang cập nhật');
+
+    AdminClassesAPI.editClassroom(id, updateData)
     .then((res) => {
       toast.success('Cập nhật thành công');
-      handleRefresh();
+      onUpdateSuccess(id, updateData)
     })
-    .catch(() => {
-      toast.error('Lỗi cập nhật');
+    .catch((err) => {
+      toast.error(`Lỗi cập nhật - ${getErrorMessage(err)}`);
+    })
+    .finally(() => {
+      toast.dismiss(toastLoadingId);
     })
   }
 

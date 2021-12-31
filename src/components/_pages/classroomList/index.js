@@ -64,6 +64,21 @@ function ClassroomListPage() {
     toast.error(message);
   }
 
+  const onUpdateSuccess = (id, newData) => {
+    const index = classrooms.findIndex(x => x.id === id);
+    if (index === -1) {
+      // Not found
+      return;
+    }
+    else {
+      setClassrooms([
+        ...classrooms.slice(0,index),
+        Object.assign({}, classrooms[index], newData),
+        ...classrooms.slice(index + 1),
+      ])
+    }
+  }
+
   return (
     <DefaultLayout>
       <ClassroomListToolbar
@@ -76,6 +91,7 @@ function ClassroomListPage() {
           isLoaded = {isLoaded}
           classrooms = {classrooms}
           handleRefresh = {() => {loadClassrooms()}}
+          onUpdateSuccess = {onUpdateSuccess}
         />
       </Box>
       <NewClassroomDialog

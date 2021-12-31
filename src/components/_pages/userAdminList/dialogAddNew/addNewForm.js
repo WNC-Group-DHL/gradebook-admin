@@ -13,13 +13,15 @@ import { useFormik } from 'formik';
 import { useState } from 'react';
 import CustomTextField from '../../../_common/customTextField';
 
+import AdminUsersAPI from '../../../../helpers/api/admin/users';
+import { toast } from 'react-toastify';
+import { getErrorMessage } from '../../../../helpers/error';
+
 
 const validationSchema = yup.object({
   username: yup
     .string('Nhập username')
-    .required('Bắt buộc'),
-  full_name: yup
-    .string('Nhập họ và tên')
+    .min(5, 'Tối thiểu 5 ký tự')
     .required('Bắt buộc'),
   password: yup
     .string('Nhập mật khẩu')
@@ -46,16 +48,18 @@ export default function NewAdminAccountForm({
 
   const handleSubmit = async (values) => {
     setFormStates({...formStates, isSubmitting: true});
-    // handleSignUp(values)
-    // .then(() => {
-      
-    // })
-    // .catch((err) => {
-    //   handleFailure(err);
-    // })
-    // .finally(() => {
+    console.log(values)
+    AdminUsersAPI.addAdminUser(values)
+    .then(() => {
+      onSuccess();
+    })
+    .catch((err) => {
+      console.log(err.response);
+      toast.error(`Lỗi - ${getErrorMessage(err)}`);
+    })
+    .finally(() => {
       setFormStates({...formStates, isSubmitting: false});
-    // })
+    })
   }
   const handleToggleShowPassword = () => {
     setFormStates({...formStates, showPassword: !formStates.showPassword})
@@ -68,7 +72,6 @@ export default function NewAdminAccountForm({
   const formik = useFormik({
     initialValues: {
       username: '',
-      full_name: '',
       password: '',
       passwordConfirm: '',
     },
@@ -89,17 +92,6 @@ export default function NewAdminAccountForm({
         onChange={formik.handleChange}
         error={Boolean(formik.errors.username)}
         helperText={formik.errors.username}
-      />
-      <CustomTextField
-        fullWidth
-        disabled={formStates.isSubmitting}
-        id='full_name'
-        name='full_name'
-        label='Họ và tên'
-        value={formik.values.full_name}
-        onChange={formik.handleChange}
-        error={Boolean(formik.errors.full_name)}
-        helperText={formik.errors.full_name}
       />
       <CustomTextField
         fullWidth

@@ -3,7 +3,12 @@ import ErrorPage from '../../_common/error';
 import Loader from '../../_common/loader';
 import ClassListTable from './classTable';
 
-function ClassroomListContainer({error, isLoaded, classrooms, handleRefresh}) {
+function ClassroomListContainer({
+  error, isLoaded, 
+  classrooms, 
+  handleRefresh,
+  onUpdateSuccess = () => {}
+}) {
   if (error) {
     return <ErrorPage 
       code = {error.status}
@@ -20,6 +25,7 @@ function ClassroomListContainer({error, isLoaded, classrooms, handleRefresh}) {
       <ClassListTable
         datas={classrooms}
         handleRefresh={handleRefresh}
+        onUpdateSuccess = {onUpdateSuccess}
       />
     );
   }

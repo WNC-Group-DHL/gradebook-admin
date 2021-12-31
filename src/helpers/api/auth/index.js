@@ -3,7 +3,11 @@ import api, { getAuthConfig } from "..";
 const baseURL = '/auth';
 
 export const selfMakeSignIn = async (userInfo) => {
-  return api.post(`${baseURL}/sign-in`, userInfo);
+  const submitData = {
+    ...userInfo,
+    user_type: 'A',
+  }
+  return api.post(`${baseURL}/sign-in`, submitData);
 }
 
 export const signOut = async () => {

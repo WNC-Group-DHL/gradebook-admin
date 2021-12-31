@@ -22,7 +22,8 @@ import { removeSigns } from '../../../../helpers/helper/stringHelper';
 
 export default function UserListTable({
   userData = [],
-  handleRefresh = () => {}
+  handleRefresh = () => {},
+  onUpdateSuccess = () => {},
 }) {
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
@@ -81,17 +82,21 @@ export default function UserListTable({
 
   const handleDelete = (userId) => () => {
     //Delete
-    const userInfo = userData.find((x) => x.id === userId)
-    const newStatus = (userInfo.status === 'A') ? 'D' : 'A';
-    AdminUsersAPI.editUser(userId, {
-      status: newStatus
-    })
+    const userInfo = userData.find((x) => x.id === userId);
+    const updateData = {
+      status: (userInfo.status === 'A') ? 'D' : 'A'
+    }
+    const toastLoadingId = toast.loading('Đang cập nhật');
+    AdminUsersAPI.editUser(userId, updateData)
     .then((res) => {
       toast.success('Cập nhật thành công');
-      handleRefresh();
+      onUpdateSuccess(userId, updateData)
     })
     .catch(() => {
       toast.error('Lỗi cập nhật');
+    })
+    .finally(() => {
+      toast.dismiss(toastLoadingId);
     })
   }
 
@@ -170,11 +175,11 @@ export default function UserListTable({
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Họ tên', alignRight: false },
+  { id: 'full_name', label: 'Họ tên', alignRight: false },
   { id: 'username', label: 'Email/Username', alignRight: false },
-  { id: 'usercode', label: 'MSSV(nếu có)', alignRight: false },
+  { id: 'user_code', label: 'MSSV(nếu có)', alignRight: false },
   { id: 'status', label: 'Trạng thái', alignRight: false },
-  { id: 'lastActive', label: 'Truy cập lần cuối', alignRight: false },
+  { id: 'last_login_at', label: 'Truy cập lần cuối', alignRight: false },
   { id: '' }
 ];
 

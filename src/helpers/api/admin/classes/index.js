@@ -14,8 +14,8 @@ export const fetchClassroom = (classId) => {
 }
 
 export const editClassroom = async (id, newClassInfo) => {
-  // const config = getAuthConfig();
-  
+  const config = getAuthConfig();
+  return api.put(`${baseURL}/${id}`, newClassInfo, config);
 }
 
 const AdminClassesAPI = {

@@ -8,6 +8,7 @@ import {
   Chip,
 } from '@mui/material';
 import { USER_ACCOUNT_STATUS } from '../../../../helpers/constants';
+import { getLocalDatetimeString } from '../../../../helpers/datetime';
 
 import UserMoreMenu from '../../../_common/userTable/userMoreMenu';
 
@@ -17,7 +18,15 @@ export default function UserTableRow({
   handleClick = () => {},
   handleDelete = () => {}
 }) {
-  const { id, name, student_code, status, username, avatarUrl, lastActive } = row;
+  const { 
+    id, 
+    full_name, 
+    user_code, 
+    status, 
+    username, 
+    avatar: avatarUrl, 
+    last_login_at: lastActive 
+  } = row;
   
   let statusInfo = USER_ACCOUNT_STATUS[status];
   if (!statusInfo) {
@@ -36,26 +45,26 @@ export default function UserTableRow({
       <TableCell padding='checkbox'>
         <Checkbox
           checked={selected}
-          onChange={(event) => handleClick(event, name)}
+          onChange={(event) => handleClick(event, full_name)}
         />
       </TableCell>
       <TableCell component='th' scope='row' padding='none'>
         <Stack direction='row' alignItems='center' spacing={2}>
-          <Avatar alt={name} src={avatarUrl} />
+          <Avatar alt={full_name} src={avatarUrl} />
           <Typography variant='subtitle2' noWrap>
-            {name}
+            {full_name}
           </Typography>
         </Stack>
       </TableCell>
       <TableCell align='left'>{username}</TableCell>
-      <TableCell align='left'>{student_code}</TableCell>
+      <TableCell align='left'>{user_code}</TableCell>
       <TableCell align='left'>
         <Chip
           label={statusInfo.text}
           color={statusInfo.color}
         />
       </TableCell>
-      <TableCell align='left'>{lastActive}</TableCell>
+      <TableCell align='left'>{getLocalDatetimeString(lastActive)}</TableCell>
       <TableCell align='right'>
         <UserMoreMenu 
           userId={id}

@@ -7,7 +7,8 @@ import AdminListTable from '../adminTable';
 
 function UserLayoutContainer({
   error, isLoaded, users, 
-  handleRefresh = () => {}
+  handleRefresh = () => {},
+  onUpdateSuccess = () => {},
 }) {
   if (error) {
     return <ErrorPage 
@@ -27,6 +28,7 @@ function UserLayoutContainer({
         <AdminListTable 
           userData={users}
           handleRefresh={handleRefresh}
+          onUpdateSuccess={onUpdateSuccess}
         />
       </>
     );

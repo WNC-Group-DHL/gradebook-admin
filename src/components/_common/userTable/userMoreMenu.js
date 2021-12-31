@@ -1,7 +1,10 @@
 import { useRef, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // material
-import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@mui/material';
+import { 
+  Menu, MenuItem, IconButton, ListItemIcon, ListItemText,
+  Tooltip,
+} from '@mui/material';
 
 import EditIcon from '@mui/icons-material/Edit';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -14,6 +17,7 @@ import RestoreFromTrashIcon from '@mui/icons-material/RestoreFromTrash';
 export default function UserMoreMenu({
   userId = '',
   isDisabled = false,
+  disable = false,
   onDeleteClick = () => {},
 }) {
   const ref = useRef(null);
@@ -22,9 +26,13 @@ export default function UserMoreMenu({
 
   return (
     <>
-      <IconButton ref={ref} onClick={() => setIsOpen(true)}>
-        <MoreVertIcon/>
-      </IconButton>
+      <Tooltip title={disable ? 'Tài khoản đăng nhập hiện tại, không chỉnh sửa được' : 'Thêm'}>
+        <span>
+          <IconButton ref={ref} disabled={disable} onClick={() => setIsOpen(true)}>
+            <MoreVertIcon/>
+          </IconButton>
+        </span>
+      </Tooltip>
 
       <Menu
         open={isOpen}

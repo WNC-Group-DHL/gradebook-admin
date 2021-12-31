@@ -4,16 +4,6 @@ import AdminUsersAPI from '../../../helpers/api/admin/users';
 import UserLayoutContainer from './layoutContainer';
 import DefaultLayout from '../../_layout/default';
 
-const usersMockData = [...Array(24)].map((_, index) => ({
-  id: index,
-  avatarUrl: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fabsspeedsensors.com%2Fproduct%2Fsample-product-1%2F&psig=AOvVaw09yjnPg6YzIIkQKievAJRc&ust=1640853439410000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCMDwx8XNiPUCFQAAAAAdAAAAABAD',
-  name: 'tester',
-  username: 'st@gmail.com',
-  status: 'A',
-  student_code: '18120001',
-  lastActive: '2021-01-01 21:21:21'
-}));
-
 export default function AdminAccountList() {
   const [users, setUsers] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -26,11 +16,16 @@ export default function AdminAccountList() {
   const loadData = () => {
     setUsers([]);
     setIsLoaded(false);
-    AdminUsersAPI.fetchAll()
+    AdminUsersAPI.fetchAllAdmin()
     .then(
-      (result) => {
+      (res) => {
         setIsLoaded(true);
-        setUsers(usersMockData);
+        if (res.data.success) {
+          setUsers(res.data.data.listUser);
+        }
+        else {
+          throw new Error('Lỗi lấy danh sách')
+        }        
       },
     )
     .catch(
@@ -57,6 +52,21 @@ export default function AdminAccountList() {
     loadData()
   }
 
+  const onUpdateSuccess = (id, newData) => {
+    const index = users.findIndex(x => x.id === id);
+    if (index === -1) {
+      // Not found
+      return;
+    }
+    else {
+      setUsers([
+        ...users.slice(0,index),
+        Object.assign({}, users[index], newData),
+        ...users.slice(index + 1),
+      ])
+    }
+  }
+
   return (
     <DefaultLayout>
       <UserLayoutContainer
@@ -64,6 +74,7 @@ export default function AdminAccountList() {
         isLoaded={isLoaded}
         users={users}
         handleRefresh={handleRefresh}
+        onUpdateSuccess={onUpdateSuccess}
       />
     </DefaultLayout>
   )
