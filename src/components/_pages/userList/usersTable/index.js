@@ -211,7 +211,7 @@ function applySortFilter(array, comparator, query) {
   if (query) {
     return filter(
       array, 
-      (_data) => removeSigns(_data.name).toLowerCase().indexOf(
+      (_data) => removeSigns(_data.full_name).toLowerCase().indexOf(
         removeSigns(query).toLowerCase()) !== -1
     );
   }
