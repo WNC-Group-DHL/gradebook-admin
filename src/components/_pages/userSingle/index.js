@@ -33,6 +33,7 @@ export default function UserSingle() {
 
   const loadData = (userId) => {
     setUser({});
+    setError(null);
     setIsLoading(true);
     AdminUsersAPI.fetchUserById(userId)
     .then((res) => {

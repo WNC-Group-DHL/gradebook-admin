@@ -19,6 +19,7 @@ export default function ClassSingle() {
 
   const loadClassroom = (classId) => {
     setClassroom({});
+    setError(null);
     setIsLoading(true);
     AdminClassesAPI.fetchClassroom(classId)
     .then((result) => {

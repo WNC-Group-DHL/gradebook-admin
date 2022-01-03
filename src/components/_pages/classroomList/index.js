@@ -23,6 +23,7 @@ function ClassroomListPage() {
 
   const loadClassrooms = () => {
     setClassrooms([]);
+    setError(null);
     setIsLoaded(false);
     AdminClassesAPI.fetchAll()
     .then(

@@ -15,6 +15,7 @@ export default function AdminAccountList() {
 
   const loadData = () => {
     setUsers([]);
+    setError(null);
     setIsLoaded(false);
     AdminUsersAPI.fetchAllAdmin()
     .then(
