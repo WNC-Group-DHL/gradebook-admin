@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import HomeIcon from '@mui/icons-material/Home';
+// import HomeIcon from '@mui/icons-material/Home';
 import SchoolIcon from '@mui/icons-material/School';
 import PersonIcon from '@mui/icons-material/Person';
 
@@ -20,12 +20,12 @@ import { Link } from 'react-router-dom';
 import ListItemLink from './listItemLink';
 
 const navLinks = [
-  {
-    text: 'Trang chủ',
-    icon: <HomeIcon/>,
-    path: '/dashboard',
-    childPaths: []
-  },
+  // {
+  //   text: 'Trang chủ',
+  //   icon: <HomeIcon/>,
+  //   path: '/dashboard',
+  //   childPaths: []
+  // },
   {
     text: 'Quản lý lớp',
     icon: <SchoolIcon/>,
