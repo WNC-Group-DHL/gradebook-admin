@@ -25,7 +25,8 @@ export default function UserTableRow({
     status, 
     username, 
     avatar: avatarUrl, 
-    last_login_at: lastActive 
+    last_login_at: lastActive,
+    created_at,
   } = row;
   
   let statusInfo = USER_ACCOUNT_STATUS[status];
@@ -65,6 +66,8 @@ export default function UserTableRow({
         />
       </TableCell>
       <TableCell align='left'>{getLocalDatetimeString(lastActive)}</TableCell>
+      <TableCell align='left'>{getLocalDatetimeString(created_at)}</TableCell>
+
       <TableCell align='right'>
         <UserMoreMenu 
           userId={id}

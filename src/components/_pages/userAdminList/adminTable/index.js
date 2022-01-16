@@ -183,6 +183,7 @@ const TABLE_HEAD = [
   { id: 'username', label: 'Email/Username', alignRight: false },
   { id: 'status', label: 'Trạng thái', alignRight: false },
   { id: 'last_login_at', label: 'Truy cập lần cuối', alignRight: false },
+  { id: 'created_at', label: 'Thời gian tạo', alignRight: false },
   { id: '' }
 ];
 

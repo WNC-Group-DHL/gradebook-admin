@@ -75,11 +75,11 @@ export default function UserTableRow({
             <Typography variant='subtitle1' noWrap>
               {ownerName}
             </Typography>
-            <Typography variant='subtitle2' noWrap>
-              {getLocalDatetimeString(createdAt)}
-            </Typography>
           </Stack>
         </Stack>
+      </TableCell>
+      <TableCell align='left'>
+        {getLocalDatetimeString(createdAt)}
       </TableCell>
 
       <TableCell align='right'>

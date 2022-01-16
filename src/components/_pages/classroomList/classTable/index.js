@@ -183,7 +183,8 @@ const TABLE_HEAD = [
   { id: 'className', label: 'Lớp', alignRight: false },
   { id: 'subject', label: 'Môn', alignRight: false },
   { id: 'status', label: 'Trạng thái', alignRight: false },
-  { id: 'owner', label: 'Thông tin tạo', alignRight: false },
+  { id: 'owner_name', label: 'Người tạo', alignRight: false },
+  { id: 'created_at', label: 'Thời gian tạo', alignRight: false },
   { id: '' }
 ];
 
