@@ -13,7 +13,7 @@ import AdminUsersAPI from '../../../../../helpers/api/admin/users';
 const validationSchema = yup.object({
   username: yup
     .string('Nhập username/ email đăng nhập')
-    .min(6, 'Tổi thiểu 6 kí tự')
+    .min(5, 'Tổi thiểu 5 kí tự')
     .required('Bặt buộc'),
   full_name: yup
     .string('Nhập tên lớp')
